@@ -8,30 +8,71 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container mt-5">
-        <h2 class="text-center">Selector de Color RGB</h2>
-        <div class="color-box" id="colorBox"></div>
-        <p class="text-center mt-3" id="hexCode">#000000</p>
-        
-        <div class="form-group mt-3">
-            <label for="redRange">Rojo</label>
-            <input type="range" id="redRange" class="form-range" min="0" max="255" value="0">
-            <input type="number" id="redInput" class="form-control mt-2" min="0" max="255" value="0">
+    <div class="container mt-5 windows-container">
+        <div class="window-header">
+            <span class="window-title">RGB Color Picker</span>
         </div>
-        <div class="form-group mt-3">
-            <label for="greenRange">Verde</label>
-            <input type="range" id="greenRange" class="form-range" min="0" max="255" value="0">
-            <input type="number" id="greenInput" class="form-control mt-2" min="0" max="255" value="0">
-        </div>
-        <div class="form-group mt-3">
-            <label for="blueRange">Azul</label>
-            <input type="range" id="blueRange" class="form-range" min="0" max="255" value="0">
-            <input type="number" id="blueInput" class="form-control mt-2" min="0" max="255" value="0">
+        <div class="window-content">
+            <h2 class="text-center windows-title">Selector de Color RGB</h2>
+            <div class="color-box" id="colorBox"></div>
+            <p class="text-center mt-3 windows-text" id="hexCode">#000000</p>
+            
+            <div class="form-group mt-3">
+                <label for="redRange" class="windows-label">Rojo</label>
+                <input type="range" id="redRange" class="form-range windows-slider" min="0" max="255" value="0">
+                <input type="number" id="redInput" class="form-control mt-2 windows-input" min="0" max="255" value="0">
+            </div>
+            <div class="form-group mt-3">
+                <label for="greenRange" class="windows-label">Verde</label>
+                <input type="range" id="greenRange" class="form-range windows-slider" min="0" max="255" value="0">
+                <input type="number" id="greenInput" class="form-control mt-2 windows-input" min="0" max="255" value="0">
+            </div>
+            <div class="form-group mt-3">
+                <label for="blueRange" class="windows-label">Azul</label>
+                <input type="range" id="blueRange" class="form-range windows-slider" min="0" max="255" value="0">
+                <input type="number" id="blueInput" class="form-control mt-2 windows-input" min="0" max="255" value="0">
+            </div>
         </div>
     </div>
     
     <script>
-     
+        const redRange = document.getElementById("redRange");
+        const greenRange = document.getElementById("greenRange");
+        const blueRange = document.getElementById("blueRange");
+        const redInput = document.getElementById("redInput");
+        const greenInput = document.getElementById("greenInput");
+        const blueInput = document.getElementById("blueInput");
+        const colorBox = document.getElementById("colorBox");
+        const hexCode = document.getElementById("hexCode");
+
+        function updateColor() {
+            const r = redRange.value;
+            const g = greenRange.value;
+            const b = blueRange.value;
+            const hex = `#${Number(r).toString(16).padStart(2, '0')}${Number(g).toString(16).padStart(2, '0')}${Number(b).toString(16).padStart(2, '0')}`;
+
+            colorBox.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+            hexCode.textContent = hex.toUpperCase();
+            
+            redInput.value = r;
+            greenInput.value = g;
+            blueInput.value = b;
+        }
+
+        function updateSliders() {
+            redRange.value = redInput.value;
+            greenRange.value = greenInput.value;
+            blueRange.value = blueInput.value;
+            updateColor();
+        }
+
+        redRange.addEventListener("input", updateColor);
+        greenRange.addEventListener("input", updateColor);
+        blueRange.addEventListener("input", updateColor);
+
+        redInput.addEventListener("input", updateSliders);
+        greenInput.addEventListener("input", updateSliders);
+        blueInput.addEventListener("input", updateSliders);
     </script>
 </body>
 </html>
